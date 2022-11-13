@@ -9,6 +9,8 @@ const { format } = require("date-fns");
 // 1st party dependencies
 var configData = require("./config/connection");
 var indexRouter = require("./routes/index");
+var usersRouter = require('./routes/users');
+var fileRouter = require('./routes/fileRoutes');
 
 async function getApp() {
 
@@ -34,6 +36,9 @@ async function getApp() {
   app.locals.format = format;
 
   app.use("/", indexRouter);
+  app.use('/users', usersRouter);
+  app.use("/files", fileRouter);
+
   app.use("/js", express.static(__dirname + "/node_modules/bootstrap/dist/js")); // redirect bootstrap JS
   app.use(
     "/css",
