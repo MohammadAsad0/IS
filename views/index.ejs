@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %> API</p>
+
+    <h2>POST /users/signin</h2>
+    <p>body: email, password</p>
+
+    <h2>POST /users/signup</h2>
+    <p>body: email, username, password</p>
+
+    <h2>GET /files/</h2>
+    <p>header: Authorization: 'username token'</p>
+
+    <h2>POST /files/</h2>
+    <p>body: title, text</p>
+    <p>header: Authorization: 'username token'</p>
+
+    <h2>PUT /files/:id</h2>
+    <p>params: id</p>
+    <p>body: title, text</p>
+    <p>header: Authorization: 'username token'</p>
+
+    <h2>DELETE /files/:id</h2>
+    <p>params: id</p>
+    <p>header: Authorization: 'username token'</p>
+
+  </body>
+</html>
