@@ -49,7 +49,7 @@ const updateFiles = async (req, res) => {
 
     const file = {
         title: title,
-        text: text,
+        encryptedText: encrypt(text),
         userId: req.userId
     }
 
