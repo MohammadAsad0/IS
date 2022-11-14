@@ -1,35 +1,18 @@
 const fileModel = require("../models/file");
-const crypto = require("crypto");
-
-// const iv = crypto.randomBytes(16);
-
-// const encrypt = (text, iv) => {
-//     // const key_in_bytes = Buffer.from(process.env.ENCRYPTION_KEY, 'base64')
-
-//     const cipher = crypto.createCipheriv('aes-128-cbc', toBytes("this is key"), iv);
-
-//     let encryptedData = cipher.update(text, "utf-8", "hex");
-//     encryptedData += cipher.final("hex");
-
-//     return { iv: Buffer.from(iv, 'binary').toString('base64'), encryptedData: encryptedData};
-// }
-
-// const decrypt = (text) => {
-//     let iv = Buffer.from(text.iv, 'hex');
-//     let encryptedText = Buffer.from(text.encryptedData, 'hex');
-//     let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
-//     let decrypted = decipher.update(encryptedText);
-//     decrypted = Buffer.concat([decrypted, decipher.final()]);
-//     return decrypted.toString();
-// }
+const {encrypt, decrypt} = require("../Encryption/crypto");
 
 const getFiles = async (req, res) => {
     try {
-        fileModel.find({userId: req.userId}, (err, result) => {
+        fileModel.find({userId: req.userId}).lean().exec((err, result) => {
 
             if (err) {
                 res.status(400).json({message: "Error Occured"});
             } else {
+                
+                result.forEach(file => {
+                    file.encryptedText = decrypt(file.encryptedText);
+                });
+
                 res.status(201).json(result);
             }
         });
@@ -45,7 +28,7 @@ const createFiles = async (req, res) => {
 
     const file = new fileModel({
         title: title,
-        text: text,
+        encryptedText: encrypt(text),
         userId: req.userId
     });
 

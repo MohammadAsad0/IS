@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
 
+const textSchema = mongoose.Schema({
+    iv: String,
+    encryptedData: String
+});
+
 const FileSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    text: {
-        type: String,
+    encryptedText: {
+        type: textSchema,
         required: true
     },
     userId: {
