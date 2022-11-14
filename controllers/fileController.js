@@ -3,15 +3,15 @@ const {encrypt, decrypt} = require("../Encryption/crypto");
 
 const getFiles = async (req, res) => {
     try {
-        fileModel.find({userId: req.userId}, (err, result) => {
+        fileModel.find({userId: req.userId}).lean().exec((err, result) => {
 
             if (err) {
                 res.status(400).json({message: "Error Occured"});
             } else {
                 
-                // result.forEach(file => {
-                //     file.encryptedText = decrypt(file.encryptedText);
-                // });
+                result.forEach(file => {
+                    file.encryptedText = decrypt(file.encryptedText);
+                });
 
                 res.status(201).json(result);
             }
