@@ -6,14 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decrypted File</title>
 </head>
-<body>
-    <div style="display: block; color:brown; background-color: rgb(239, 216, 216)">
-        <h1>
-            title: <%= title %>
-        </h1>
-        <p>
-            text: <%= text %> 
-        </p>
+<body style="background-color: rgba(56, 56, 56, 0.979);">
+    <style>
+        .card {
+            padding: 20px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+            background-color: rgb(232, 229, 229);
+            border-radius: 10px;
+            font-family: Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .heading {
+            background-color: rgba(154, 154, 154, 0.133);
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .content {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+    <div class="card">
+        <h2 class="heading"><%= title %></h2>        
+        <p class="content"><%= text %></>
     </div>
 </body>
 </html>
