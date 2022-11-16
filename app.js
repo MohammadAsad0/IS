@@ -12,6 +12,7 @@ var configData = require("./config/connection");
 var indexRouter = require("./routes/index");
 var usersRouter = require('./routes/users');
 var fileRouter = require('./routes/fileRoutes');
+var QRRouter = require("./routes/QRRouter");
 
 async function getApp() {
 
@@ -40,6 +41,7 @@ async function getApp() {
   app.use("/", indexRouter);
   app.use('/users', usersRouter);
   app.use("/files", fileRouter);
+  app.use("/qr", QRRouter);
 
   app.use("/js", express.static(__dirname + "/node_modules/bootstrap/dist/js")); // redirect bootstrap JS
   app.use(
