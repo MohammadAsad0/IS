@@ -1,5 +1,6 @@
 const fileModel = require("../models/file");
 const {encrypt, decrypt} = require("../Encryption/crypto");
+const bcrypt = require("bcrypt");
 
 const getFiles = async (req, res) => {
     try {
@@ -11,6 +12,7 @@ const getFiles = async (req, res) => {
                 
                 result.forEach(file => {
                     file.encryptedText = decrypt(file.encryptedText);
+                    file.password = "";
                 });
 
                 res.status(201).json(result);
@@ -24,12 +26,15 @@ const getFiles = async (req, res) => {
 }
 
 const createFiles = async (req, res) => {
-    const {title, text} = req.body;
+    const {title, text, password} = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, parseInt(process.env.FILE_HASH_ROUNDS));
 
     const file = new fileModel({
         title: title,
         encryptedText: encrypt(text),
-        userId: req.userId
+        userId: req.userId,
+        password: hashedPassword
     });
 
     try {
@@ -45,12 +50,15 @@ const createFiles = async (req, res) => {
 const updateFiles = async (req, res) => {
 
     const id = req.params.id;
-    const {title, text} = req.body;
+    const {title, text, password} = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, parseInt(process.env.FILE_HASH_ROUNDS));
 
     const file = {
         title: title,
         encryptedText: encrypt(text),
-        userId: req.userId
+        userId: req.userId,
+        password: hashedPassword
     }
 
     try {

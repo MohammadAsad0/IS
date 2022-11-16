@@ -15,8 +15,7 @@ const signup = async (req, res) => {
             return res.status(400).json({message: "User already exists"});
         }
 
-        // TODO: add hash rounds 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, parseInt(process.env.USER_HASH_ROUNDS));
 
         const result = await userModel.create({
             email: email,

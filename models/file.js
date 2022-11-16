@@ -18,6 +18,10 @@ const FileSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 }, {timeStamps: true});
 
