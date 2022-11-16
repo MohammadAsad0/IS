@@ -1,22 +1,22 @@
 var express = require('express');
 var QRRouter = express.Router();
 const bcrypt = require("bcrypt");
+var mongoose = require('mongoose');
 
 const fileModel = require("../models/file");
 const {decrypt} = require("../Encryption/crypto");
 
-var fileId;
 /* GET QR page. */
 QRRouter.get('/:id', (req, res, next) => {
-    fileId = req.params.id;
-    res.render('QR');
+    var fileId = req.params.id;
+    res.render('QR', {fileId: fileId});
 });
 
 QRRouter.post('/', async (req, res) => {
-    const {password} = req.body;
+    var {fileId, password} = req.body;
 
     try {        
-        const fileFound = await fileModel.findOne({id: fileId});
+        var fileFound = await fileModel.findOne({_id: fileId});
 
         if(!fileFound) {
             return res.status(404).json({message: "File not found"});
