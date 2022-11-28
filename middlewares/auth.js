@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
         let token = req.headers.authorization;
 
         if(token) {
-            token = token.split(" ")[1];
+            token = token.split(" ")[1]; // asad <token>
 
             let user = jwt.verify(token, SECRET);
             req.userId = user.id;
